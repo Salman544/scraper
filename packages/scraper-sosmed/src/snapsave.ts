@@ -3,7 +3,7 @@ import { decryptSnapSave, getRenderedSnapSaveUrl } from '../utils/index.js'
 import cheerio from 'cheerio'
 import { SnapSaveArgsSchema, SnapSaveSchema, SnapSave } from '../types/index.js'
 
-export default async function snapsave (url: string): Promise<SnapSave[]> {
+export default async function snapsave (url: string, agent: HttpsProxyAgent): Promise<SnapSave[]> {
   SnapSaveArgsSchema.parse(arguments)
 
   const html = await got.post('https://snapsave.app/action.php?lang=id', {
@@ -13,6 +13,7 @@ export default async function snapsave (url: string): Promise<SnapSave[]> {
       // cookie: '_ga=GA1.2.430081394.1657026583; _gid=GA1.2.706849190.1657026583; __gads=ID=86a4700f8371f585-22080b020ad500b0:T=1657026585:RT=1657026585:S=ALNI_MZqzufYDUPXIvFcKgvBGvKGiy2nrA; __gpi=UID=0000076594a4f960:T=1657026585:RT=1657073498:S=ALNI_MbSZmiRZ8YVCA8B07uFu3ZQ1W2lRQ; _gat=1; __atuvc=6%7C27; __atuvs=62c4ef5ab60b5289001',
       origin: 'https://snapsave.app',
       referer: 'https://snapsave.app/id',
+      agent: agent,
       'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36'
     },
     form: { url }
